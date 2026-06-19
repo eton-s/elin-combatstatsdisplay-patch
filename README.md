@@ -38,7 +38,7 @@ Flip a single byte in the mod's DLL so the parameter-count check accepts the new
      ```
 3. **Load it as a local copy** (so Steam won't overwrite it on the next update):
    - Copy the Workshop folder `3555582126` into `…\steamapps\common\Elin\Package\` and rename it, e.g. `CombatStatsDisplay_patched`.
-   - Replace the DLL in that copy with your `CombatStatsDisplay.patched.dll`.
+   - **Replace the original `CombatStatsDisplay.dll` in that copy with your patched build, keeping the exact filename** — i.e. rename `CombatStatsDisplay.patched.dll` → `CombatStatsDisplay.dll`, overwriting the original. The folder must contain exactly one `CombatStatsDisplay.dll` (the patched one); don't leave the unpatched copy beside it.
    - In that copy's `package.xml`, change `<id>` and `<title>` to something distinct (e.g. add `_patched`) so it shows up as its own entry.
 4. **Switch versions in-game.** Launch Elin → Mods. **Disable** the Workshop "CombatStatsDisplay" and **enable** your patched copy. They share one plugin id, so only one may be active at a time.
 5. Restart, load your save, and confirm damage now counts.
