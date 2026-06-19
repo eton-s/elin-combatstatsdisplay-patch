@@ -21,17 +21,21 @@ Flip a single byte in the mod's DLL so the parameter-count check accepts the new
 
 ## Usage
 
-> Uses Windows PowerShell (built into Windows) — nothing to install.
+> No build tools needed — use whichever applier suits your system.
 
 1. **Find the mod DLL.** With CombatStatsDisplay subscribed, it's at:
    ```
    <SteamLibrary>\steamapps\workshop\content\2135150\3555582126\CombatStatsDisplay.dll
    ```
-2. **Run the patcher.** It writes `CombatStatsDisplay.patched.dll` in the current folder; your original is left untouched:
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File apply_fix.ps1 "C:\path\to\CombatStatsDisplay.dll"
-   ```
-   The script verifies the file's SHA-256 and the exact byte before changing anything, so it can't patch the wrong file.
+2. **Run the patcher.** It writes `CombatStatsDisplay.patched.dll` in the current folder; your original is left untouched. Both appliers verify the file's SHA-256 and the exact byte before changing anything, so they can't patch the wrong file.
+   - **Windows (PowerShell, built in):**
+     ```powershell
+     powershell -ExecutionPolicy Bypass -File apply_fix.ps1 "C:\path\to\CombatStatsDisplay.dll"
+     ```
+   - **Any OS (Python 3):**
+     ```bash
+     python3 apply_fix.py "/path/to/CombatStatsDisplay.dll"
+     ```
 3. **Load it as a local copy** (so Steam won't overwrite it on the next update):
    - Copy the Workshop folder `3555582126` into `…\steamapps\common\Elin\Package\` and rename it, e.g. `CombatStatsDisplay_patched`.
    - Replace the DLL in that copy with your `CombatStatsDisplay.patched.dll`.
@@ -43,7 +47,11 @@ Flip a single byte in the mod's DLL so the parameter-count check accepts the new
 
 Open `CombatStatsDisplay.dll`, go to offset `0x5BC6`, change the byte `0x33` to `0x32`, and save.
 
+## Platforms
+
+Elin is a Windows game — there's no native macOS or Linux build. If you play through **Proton** (Linux / Steam Deck) or **CrossOver** (macOS), the mod is still the same Windows DLL, so you can patch it from your native shell with the Python applier (`python3 apply_fix.py …`) and then point the game at the patched copy.
+
 ## Notes
 
-- **Unofficial.** This patches *your own* copy of the mod; it does not redistribute the mod. CombatStatsDisplay is created by NS.
-- **Version-specific.** The hashes and offset above match the current Workshop build. If the mod is updated, `apply_fix.ps1` will refuse to run (the SHA-256 won't match) rather than patch the wrong bytes — the offset would need to be re-derived for the new build.
+- **Unofficial.** This patches *your own* copy of the mod; it does not redistribute the mod. CombatStatsDisplay is by its author — see the [Steam Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3555582126). (The mod files list the author handle as `NS`.)
+- **Version-specific.** The hashes and offset above match the current Workshop build. If the mod is updated, the appliers will refuse to run (the SHA-256 won't match) rather than patch the wrong bytes — the offset would need to be re-derived for the new build.
