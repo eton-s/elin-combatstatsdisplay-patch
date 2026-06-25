@@ -1,5 +1,7 @@
 # elin-combatstatsdisplay-patch
 
+UPDATE 2026-06-24: Mod has been updated to be compatable with EA23.307, this patch is no longer needed.
+
 A one-byte patch that restores damage tracking in the **[CombatStatsDisplay](https://steamcommunity.com/sharedfiles/filedetails/?id=3555582126)** mod for **[Elin](https://store.steampowered.com/app/2135150/Elin/)**.
 
 ## Problem
